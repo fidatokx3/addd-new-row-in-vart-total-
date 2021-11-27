@@ -1,0 +1,28 @@
+    add_action( 'woocommerce_cart_totals_after_order_total', 'uw_display_cart_totals_after' );
+     add_action( 'woocommerce_review_order_after_order_total', 'uw_display_cart_totals_after' );
+     /**
+      * Pulls in cart totals and adds a new table row to the cart/checkout totals
+      *
+      * @author UltimateWoo - https://www.ultimatewoo.com
+      */
+     function uw_display_cart_totals_after() {
+     
+        
+         // Cart total
+         $cart_total = WC()->cart->get_total( '' );
+     
+         // Final calculated total (future + current)
+         $final_total = $future_payments + $cart_total;
+     
+         ?>
+         <tr class="order-total" id="final-total">
+             <th><?php _e( 'Final Total', 'ultimatewoo-pro' ); ?></th>
+             <td><?php echo wc_price( $final_total ); ?></td>
+         </tr>
+         <script>
+             jQuery(document).ready(function($) {
+                 $('#final-total').insertBefore( '.shop_table .cart-subtotal' );
+             });
+         </script>
+         <?php
+     }
